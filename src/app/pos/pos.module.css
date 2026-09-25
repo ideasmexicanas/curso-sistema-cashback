@@ -1,0 +1,134 @@
+.posContainer {
+  display: flex;
+  min-height: 100vh;
+  background-color: var(--background);
+}
+
+.sidebar {
+  width: 350px;
+  background: var(--card-bg);
+  border-right: 1px solid var(--card-border);
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.mainContent {
+  flex: 1;
+  padding: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.calculatorCard {
+  width: 100%;
+  max-width: 500px;
+  padding: 2.5rem;
+}
+
+.display {
+  background: var(--input-bg);
+  border-radius: 16px;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+  text-align: right;
+  border: 1px solid var(--card-border);
+}
+
+.amount {
+  font-size: 3.5rem;
+  font-weight: bold;
+  color: #fff;
+  line-height: 1;
+}
+
+.rewardBadge {
+  display: inline-block;
+  background: rgba(0, 208, 132, 0.2);
+  color: var(--primary);
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  margin-top: 8px;
+}
+
+.keypad {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+}
+
+.key {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 16px;
+  font-size: 1.5rem;
+  color: #fff;
+  padding: 1.5rem 0;
+  cursor: pointer;
+  transition: all 0.1s ease;
+  font-weight: 500;
+}
+
+.key:hover {
+  background: rgba(255, 255, 255, 0.1);
+  transform: translateY(-2px);
+}
+
+.key:active {
+  transform: translateY(2px);
+}
+
+.key.action {
+  background: rgba(255, 71, 87, 0.2);
+  color: var(--danger);
+}
+
+.customerInfo {
+  margin-top: 2rem;
+  padding-top: 2rem;
+  border-top: 1px solid var(--card-border);
+}
+
+.label {
+  font-size: 0.85rem;
+  color: rgba(255,255,255,0.5);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 0.5rem;
+}
+
+.value {
+  font-size: 1.2rem;
+  color: #fff;
+  margin-bottom: 1.5rem;
+}
+
+.inputField {
+  width: 100%;
+  background: var(--input-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 12px;
+  padding: 12px 16px;
+  color: #fff;
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  outline: none;
+}
+
+.inputField:focus {
+  border-color: var(--primary);
+}
+
+.paymentBtn {
+  all: unset;
+  box-sizing: border-box;
+  width: 100%;
+}
+
+.paymentBtn:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}

@@ -1,0 +1,8 @@
+.next
+node_modules
+.git
+.env
+*.db
+check_api.js
+check_db.js
+fix-db.js

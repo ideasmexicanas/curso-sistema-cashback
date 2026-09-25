@@ -1,0 +1,93 @@
+generator client {
+  provider = "prisma-client-js"
+  binaryTargets = ["native", "rhel-openssl-3.0.x", "rhel-openssl-1.0.x", "linux-musl-openssl-3.0.x"]
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+model Tenant {
+  id                   String        @id @default(uuid())
+  name                 String
+  email                String        @unique @default("admin@loyaltyos.com")
+  password             String        @default("admin123")
+  rewardPercentage     Float         @default(0.05) // Cash reward percentage
+  messageQuota         Int           @default(1000) // Monthly message limit
+  createdAt            DateTime      @default(now())
+  updatedAt            DateTime      @updatedAt
+  transactions         Transaction[]
+  employees            Employee[]
+  messageLogs          MessageLog[]
+}
+
+model Employee {
+  id           String        @id @default(uuid())
+  tenantId     String
+  name         String
+  createdAt    DateTime      @default(now())
+  
+  tenant       Tenant        @relation(fields: [tenantId], references: [id])
+  transactions Transaction[]
+}
+
+model Customer {
+  id           String        @id @default(uuid())
+  phone        String        @unique
+  name         String?
+  birthDate    DateTime?
+  balance      Float         @default(0.0)
+  totalSpent   Float         @default(0.0)
+  vipSent      Boolean       @default(false)
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+  transactions Transaction[]
+}
+
+model Transaction {
+  id            String    @id @default(uuid())
+  tenantId      String
+  customerId    String
+  employeeId    String?
+  amount        Float
+  rewardEarned  Float
+  type          String    @default("EARN") // EARN or REDEEM
+  paymentMethod String    @default("CASH") // CASH or CARD
+  createdAt     DateTime  @default(now())
+  
+  tenant        Tenant    @relation(fields: [tenantId], references: [id])
+  customer      Customer  @relation(fields: [customerId], references: [id])
+  employee      Employee? @relation(fields: [employeeId], references: [id])
+}
+
+model CampaignSettings {
+  id           String   @id @default(uuid())
+  tenantId     String   @unique
+  retention    Boolean  @default(false)
+  retentionMsg String?  @db.Text
+  birthday     Boolean  @default(false)
+  birthdayMsg  String?  @db.Text
+  vip          Boolean  @default(false)
+  vipMsg       String?  @db.Text
+  vipThreshold Float    @default(500.0)
+  promoMsg     String?  @db.Text
+  referral     Boolean  @default(false)
+  referralRewardReferrer Float @default(50.0)
+  referralRewardReferred Float @default(50.0)
+  referralMsg  String?  @db.Text
+  updatedAt    DateTime @updatedAt
+}
+
+model MessageLog {
+  id        String   @id @default(uuid())
+  tenantId  String
+  channel   String   // "SMS" or "WHATSAPP"
+  type      String   // "TRANSACTION", "CAMPAIGN", "BIRTHDAY", "VIP", "RETENTION", "WELCOME"
+  phone     String
+  status    String   @default("SENT")
+  createdAt DateTime @default(now())
+
+  tenant    Tenant   @relation(fields: [tenantId], references: [id])
+}
