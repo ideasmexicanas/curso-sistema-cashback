@@ -14,6 +14,58 @@ export default function ResumenPage() {
   const extraVisits = Math.round(monthlyCustomers * (increaseRate / 100));
   const extraRevenue = extraVisits * ticket;
 
+  // Competitor Analysis state & data (the 4 examples)
+  const [activeCompetitor, setActiveCompetitor] = useState<'natural' | 'starbucks' | 'cinepolis' | 'toks'>('natural');
+
+  const competitorsData = [
+    {
+      id: 'natural' as const,
+      name: '100% Natural',
+      icon: '🌿',
+      category: 'Restaurantes',
+      bullets: [
+        'Te da el 5% en consumo total pagando con tarjeta y el 10% en consumo total pagando en efectivo.',
+        'Requiere que el cliente descargue una App pesada en iOS o Android, creando fricción en el registro.',
+        'Premios específicos por cumpleaños y al cumplir un año de antigüedad con la tarjeta.'
+      ]
+    },
+    {
+      id: 'starbucks' as const,
+      name: 'Starbucks Rewards',
+      icon: '☕',
+      category: 'Cafeterías',
+      bullets: [
+        'Acumulación compleja basada en estrellas y métodos de pago (1 estrella por $10 MXN con su tarjeta, o por $20 MXN en efectivo/tarjeta).',
+        'Niveles Green y Gold que requieren acumular 200 estrellas al año.',
+        'Exige la descarga de App, registro extenso de cuenta y añadir métodos de pago para máxima eficiencia.'
+      ]
+    },
+    {
+      id: 'cinepolis' as const,
+      name: 'Club Cinépolis',
+      icon: '🎬',
+      category: 'Entretenimiento',
+      bullets: [
+        'Puntos basados en visitas semestrales (niveles FAN, FANÁTICO, SÚPER FANÁTICO) que otorgan 5% o 10%.',
+        'Mecánica compleja condicionada a cantidad de visitas en cortes de 6 meses (Ene-Jun / Jul-Dic).',
+        'Requiere mostrar tarjeta física o abrir la aplicación móvil en taquilla, entorpeciendo la fila.'
+      ]
+    },
+    {
+      id: 'toks' as const,
+      name: 'A Comer Club (Toks)',
+      icon: '🍽️',
+      category: 'Cadenas Familiares',
+      bullets: [
+        'Acumulación de puntos para canjear por platillos o subir de nivel.',
+        'Requiere descargar la App, crear una cuenta y escanear el ticket con la función PayClub en cada visita.',
+        'Fricción alta post-consumo al depender de que el cliente no olvide escanear su propio ticket.'
+      ]
+    }
+  ];
+
+  const currentComp = competitorsData.find(c => c.id === activeCompetitor) || competitorsData[0];
+
   const handlePrint = () => {
     if (typeof window !== 'undefined') {
       window.print();
@@ -289,14 +341,79 @@ export default function ResumenPage() {
           </div>
         </section>
 
-        {/* 5. Comparativa Cadenas vs LoyaltyOS */}
+        {/* 5. Análisis Competitivo (Los 4 Ejemplos) */}
         <section className={styles.section}>
           <div className={styles.sectionHeader}>
-            <span className={styles.sectionTag}>Ventaja Competitiva</span>
-            <h2 className={styles.sectionTitle}>LoyaltyOS vs Las Cadenas Tradicionales</h2>
+            <span className={styles.sectionTag}>ANÁLISIS COMPETITIVO</span>
+            <h2 className={styles.sectionTitle}>{currentComp.name} vs LoyaltyOS</h2>
           </div>
 
-          <div className={styles.tableWrapper}>
+          {/* Selector de marcas */}
+          <div className={styles.compTabs}>
+            {competitorsData.map(comp => (
+              <button
+                key={comp.id}
+                onClick={() => setActiveCompetitor(comp.id)}
+                className={`${styles.compTabBtn} ${activeCompetitor === comp.id ? styles.activeTab : ''}`}
+              >
+                {comp.icon} {comp.name}
+              </button>
+            ))}
+          </div>
+
+          {/* Comparativa Frente a Frente (Identico a la presentación) */}
+          <div className={styles.compGrid}>
+            {/* Tarjeta Tradicional */}
+            <div className={styles.compCardTrad}>
+              <div className={styles.compHeaderTrad}>El modelo tradicional</div>
+              <div className={styles.compBrandTitle}>{currentComp.name}</div>
+              <div className={styles.compBulletList}>
+                {currentComp.bullets.map((bullet, idx) => (
+                  <p key={idx} className={styles.compBulletItemTrad}>{bullet}</p>
+                ))}
+              </div>
+            </div>
+
+            {/* Tarjeta LoyaltyOS */}
+            <div className={styles.compCardLoyalty}>
+              <div className={styles.compHeaderLoyalty}>La ventaja LoyaltyOS</div>
+              <div className={styles.compBulletList}>
+                <div className={styles.compBulletItemLoyalty}>
+                  <span className={styles.checkIcon}>✓</span>
+                  <div>
+                    <strong>Sin Apps ni descargas:</strong> El cliente accede a su billetera vía web desde cualquier navegador. Cero fricción.
+                  </div>
+                </div>
+                <div className={styles.compBulletItemLoyalty}>
+                  <span className={styles.checkIcon}>✓</span>
+                  <div>
+                    <strong>Registro en 2 segundos:</strong> Únicamente se necesita el número de WhatsApp en la tablet. Adiós a los formularios largos.
+                  </div>
+                </div>
+                <div className={styles.compBulletItemLoyalty}>
+                  <span className={styles.checkIcon}>✓</span>
+                  <div>
+                    <strong>Mecánica transparente:</strong> Acumulación directa en saldo digital (Cashback) sin sistemas complejos de estrellas o puntos devaluados.
+                  </div>
+                </div>
+                <div className={styles.compBulletItemLoyalty}>
+                  <span className={styles.checkIcon}>✓</span>
+                  <div>
+                    <strong>Operación veloz en mostrador:</strong> El cajero envía el saldo al instante. Las filas avanzan rápido y la experiencia de pago es fluida.
+                  </div>
+                </div>
+                <div className={styles.compBulletItemLoyalty}>
+                  <span className={styles.checkIcon}>✓</span>
+                  <div>
+                    <strong>Comunicación inteligente:</strong> Envío de SMS y WhatsApp optimizados. Notificamos al cliente solo en su primer registro y a través de campañas automatizadas, evitando saturarlo de alertas y maximizando el impacto.
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Tabla Resumen */}
+          <div className={styles.tableWrapper} style={{ marginTop: '2rem' }}>
             <table className={styles.table}>
               <thead>
                 <tr>
