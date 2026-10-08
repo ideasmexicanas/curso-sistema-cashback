@@ -69,6 +69,7 @@ export default function DashboardClient() {
   const [msgStats, setMsgStats] = useState<{ month: number; quota: number } | null>(null);
   const [loading, setLoading] = useState(true);
   const [downloading, setDownloading] = useState(false);
+  const [downloadingHtml, setDownloadingHtml] = useState(false);
 
   const fetchData = useCallback(async (p: Period, pg: number) => {
     setLoading(true);
@@ -95,6 +96,12 @@ export default function DashboardClient() {
     setTimeout(() => setDownloading(false), 3000);
   };
 
+  const handleDownloadHtml = () => {
+    setDownloadingHtml(true);
+    window.location.href = `/api/export/html?period=${period}`;
+    setTimeout(() => setDownloadingHtml(false), 3000);
+  };
+
   const fmt = (n: number) =>
     new Intl.NumberFormat('es-MX', { style: 'currency', currency: 'MXN' }).format(n);
 
@@ -110,9 +117,19 @@ export default function DashboardClient() {
       {/* ── Period bar ───────────────────────────────── */}
       <div className={styles.periodBar}>
         <PeriodSelector value={period} onChange={handlePeriodChange} />
-        <button onClick={handleDownload} disabled={downloading} className={styles.downloadBtn}>
-          {downloading ? '⏳ Generando...' : '⬇ Descargar Excel'}
-        </button>
+        <div style={{ display: 'flex', gap: '0.75rem', alignItems: 'center', flexWrap: 'wrap' }}>
+          <button 
+            onClick={handleDownloadHtml} 
+            disabled={downloadingHtml} 
+            className={styles.downloadHtmlBtn}
+            title="Descargar reporte interactivo en HTML con gráficos animados"
+          >
+            {downloadingHtml ? '⏳ Generando HTML...' : '📊 Descargar HTML'}
+          </button>
+          <button onClick={handleDownload} disabled={downloading} className={styles.downloadBtn}>
+            {downloading ? '⏳ Generando...' : '⬇ Descargar Excel'}
+          </button>
+        </div>
       </div>
 
       {loading ? (
