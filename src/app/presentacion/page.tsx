@@ -376,7 +376,7 @@ export default function PresentacionPage() {
                       <li>Dashboard con Gráficas Analíticas</li>
                       <li>Mensaje de Bienvenida Automático</li>
                       <li>4 módulos de automatización y marketing</li>
-                      <li>Incluye 1000 mensajes mensuales (Bienvenida y Campañas de Marketing).</li>
+                      <li>Incluye 2000 mensajes mensuales (Bienvenida y Campañas de Marketing).</li>
                     </ul>
                   </div>
 
@@ -393,7 +393,7 @@ export default function PresentacionPage() {
                       <li>Dashboard con Gráficas Analíticas</li>
                       <li>Mensaje de Bienvenida Automático</li>
                       <li>4 módulos de automatización y marketing</li>
-                      <li>Incluye 1000 mensajes mensuales (Bienvenida y Campañas de Marketing).</li>
+                      <li>Incluye 2000 mensajes mensuales (Bienvenida y Campañas de Marketing).</li>
                     </ul>
                   </div>
 
@@ -409,7 +409,7 @@ export default function PresentacionPage() {
                       <li>Dashboard con Gráficas Analíticas</li>
                       <li>Mensaje de Bienvenida Automático</li>
                       <li>4 módulos de automatización y marketing</li>
-                      <li>Incluye 1000 mensajes mensuales (Bienvenida y Campañas de Marketing).</li>
+                      <li>Incluye 2000 mensajes mensuales (Bienvenida y Campañas de Marketing).</li>
                     </ul>
                   </div>
                 </div>
@@ -434,7 +434,7 @@ export default function PresentacionPage() {
                         <li>Dashboard con Gráficas Analíticas</li>
                         <li>Mensaje de Bienvenida Automático</li>
                         <li>4 módulos de automatización y marketing</li>
-                        <li>Incluye 1000 mensajes mensuales (Bienvenida y Campañas de Marketing).</li>
+                        <li>Incluye 2000 mensajes mensuales (Bienvenida y Campañas de Marketing).</li>
                       </ul>
                     </div>
 
@@ -451,7 +451,7 @@ export default function PresentacionPage() {
                         <li>Dashboard con Gráficas Analíticas</li>
                         <li>Mensaje de Bienvenida Automático</li>
                         <li>4 módulos de automatización y marketing</li>
-                        <li>Incluye 1000 mensajes mensuales (Bienvenida y Campañas de Marketing).</li>
+                        <li>Incluye 2000 mensajes mensuales (Bienvenida y Campañas de Marketing).</li>
                       </ul>
                     </div>
 
@@ -467,7 +467,7 @@ export default function PresentacionPage() {
                         <li>Dashboard con Gráficas Analíticas</li>
                         <li>Mensaje de Bienvenida Automático</li>
                         <li>4 módulos de automatización y marketing</li>
-                        <li>Incluye 1000 mensajes mensuales (Bienvenida y Campañas de Marketing).</li>
+                        <li>Incluye 2000 mensajes mensuales (Bienvenida y Campañas de Marketing).</li>
                       </ul>
                     </div>
                   </div>
