@@ -511,33 +511,62 @@ export default function PropuestaPage() {
               )}
 
               {slide.type === 'investment' && (
-                <div className={styles.investWrapper} style={{ marginTop: '1.5rem' }}>
-                  {/* Side-by-Side Comparison Cards */}
-                  <div className={styles.vsCardsRow}>
-                    <div className={styles.vsCardBad} style={{ padding: '2rem 2.2rem' }}>
-                      <div style={{ color: '#ff6b81', fontSize: '1.35rem', fontWeight: 800, display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
-                        <span>🏢 Sistema Propio de Cadena Restaurantera</span>
-                        <span style={{ fontSize: '0.75rem', background: 'rgba(255,71,87,0.18)', padding: '0.25rem 0.75rem', borderRadius: '50px' }}>Alto Riesgo</span>
-                      </div>
-                      <ul className={styles.badList} style={{ fontSize: '1.05rem' }}>
-                        <li style={{ padding: '0.75rem 0 0.75rem 1.8rem', fontSize: '1.02rem' }}><strong>Inversión inicial de $150,000 a $250,000 MXN:</strong> Desembolso pesado antes de atender al primer cliente, dependiendo de lo robusto de la plataforma.</li>
-                        <li style={{ padding: '0.75rem 0 0.75rem 1.8rem', fontSize: '1.02rem' }}><strong>Pago mensual de $30,000 MXN hacia arriba:</strong> Igualas forzosas de programadores, soporte técnico, mantenimiento y parches de seguridad.</li>
-                        <li style={{ padding: '0.75rem 0 0.75rem 1.8rem', fontSize: '1.02rem' }}><strong>Servidores excesivamente caros:</strong> Facturas impredecibles de nube, bases de datos y tráfico que escalan cada mes.</li>
-                        <li style={{ padding: '0.75rem 0 0.75rem 1.8rem', fontSize: '1.02rem' }}><strong>Panel de control complejo:</strong> Interfaces saturadas y difíciles de entender que exigen semanas de capacitación técnica.</li>
-                      </ul>
+                <div className={styles.cleanInvestGrid} key={`inv-${isActive}`}>
+                  {/* Columna Izquierda: Gráfica Minimalista Animada */}
+                  <div className={styles.cleanChartCard}>
+                    <div style={{ width: '100%', textAlign: 'center' }}>
+                      <span style={{ fontSize: '0.78rem', textTransform: 'uppercase', letterSpacing: '1.2px', color: 'rgba(255,255,255,0.45)', fontWeight: 700 }}>
+                        Desembolso Total Estimado (1er Año)
+                      </span>
                     </div>
 
-                    <div className={styles.vsCardGood} style={{ padding: '2rem 2.2rem' }}>
-                      <div style={{ color: '#00d084', fontSize: '1.35rem', fontWeight: 800, display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
-                        <span>🚀 La Ventaja Económica LoyaltyOS</span>
-                        <span style={{ fontSize: '0.75rem', background: '#00d084', color: '#000', padding: '0.25rem 0.75rem', borderRadius: '50px', fontWeight: 800 }}>Inteligente y Rentable</span>
+                    <div className={styles.pillarsWrap}>
+                      <div className={styles.pillarCol}>
+                        <span style={{ color: '#ff6b81', fontWeight: 800, fontSize: '1.15rem' }}>+$510k</span>
+                        <div className={styles.pillarBarBad} />
+                        <span style={{ fontSize: '0.85rem', color: 'rgba(255,255,255,0.6)', fontWeight: 600, marginTop: '0.3rem' }}>
+                          Sistema Propio
+                        </span>
                       </div>
-                      <ul className={styles.goodList} style={{ fontSize: '1.05rem' }}>
-                        <li style={{ padding: '0.75rem 0 0.75rem 1.8rem', fontSize: '1.02rem' }}><strong>$0 MXN de Inversión Inicial en Desarrollo:</strong> Tecnología probada de nivel corporativo lista para usarse hoy mismo sin riesgos.</li>
-                        <li style={{ padding: '0.75rem 0 0.75rem 1.8rem', fontSize: '1.02rem' }}><strong>Inversión mensual ultra accesible:</strong> Una fracción mínima de lo que gasta una cadena, pagándose sola con el retorno de tus clientes.</li>
-                        <li style={{ padding: '0.75rem 0 0.75rem 1.8rem', fontSize: '1.02rem' }}><strong>Servidores de alta velocidad 100% incluidos:</strong> Nos encargamos de toda la nube, encriptación y respaldos sin cobros sorpresa.</li>
-                        <li style={{ padding: '0.75rem 0 0.75rem 1.8rem', fontSize: '1.02rem' }}><strong>Panel de control amigable y poderoso:</strong> Diseñado para restauranteros; en 5 minutos dominas métricas animadas, cajeros y campañas de WhatsApp.</li>
-                      </ul>
+
+                      <div className={styles.pillarCol}>
+                        <span style={{ color: '#00d084', fontWeight: 900, fontSize: '1.2rem' }}>82% Menos</span>
+                        <div className={styles.pillarBarGood} />
+                        <span style={{ fontSize: '0.88rem', color: '#00d084', fontWeight: 800, marginTop: '0.3rem' }}>
+                          LoyaltyOS
+                        </span>
+                      </div>
+                    </div>
+
+                    <div style={{ marginTop: '1.2rem', background: 'rgba(0, 208, 132, 0.08)', border: '1px solid rgba(0, 208, 132, 0.25)', borderRadius: '50px', padding: '0.55rem 1.2rem', fontSize: '0.88rem', color: '#00d084', fontWeight: 700 }}>
+                      ✨ Ahorras más de $400,000 MXN el 1er año
+                    </div>
+                  </div>
+
+                  {/* Columna Derecha: 4 Filas Comparativas Ultra Limpias */}
+                  <div className={styles.cleanRowsWrap}>
+                    <div className={styles.cleanRow}>
+                      <div style={{ fontWeight: 700, color: '#fff', fontSize: '0.98rem' }}>💰 Inversión Inicial</div>
+                      <div style={{ color: 'rgba(255,107,129,0.85)', fontSize: '0.9rem' }}>✕ $150,000 a $250,000</div>
+                      <div style={{ color: '#00d084', fontWeight: 700, fontSize: '0.95rem' }}>✓ $0 MXN (Listo hoy)</div>
+                    </div>
+
+                    <div className={styles.cleanRow}>
+                      <div style={{ fontWeight: 700, color: '#fff', fontSize: '0.98rem' }}>📅 Pago Mensual</div>
+                      <div style={{ color: 'rgba(255,107,129,0.85)', fontSize: '0.9rem' }}>✕ $30,000+ MXN / mes</div>
+                      <div style={{ color: '#00d084', fontWeight: 700, fontSize: '0.95rem' }}>✓ Fracción mínima</div>
+                    </div>
+
+                    <div className={styles.cleanRow}>
+                      <div style={{ fontWeight: 700, color: '#fff', fontSize: '0.98rem' }}>☁️ Servidores Cloud</div>
+                      <div style={{ color: 'rgba(255,107,129,0.85)', fontSize: '0.9rem' }}>✕ Excesivamente caros</div>
+                      <div style={{ color: '#00d084', fontWeight: 700, fontSize: '0.95rem' }}>✓ 100% Incluidos ($0)</div>
+                    </div>
+
+                    <div className={styles.cleanRow}>
+                      <div style={{ fontWeight: 700, color: '#fff', fontSize: '0.98rem' }}>🖥️ Panel de Control</div>
+                      <div style={{ color: 'rgba(255,107,129,0.85)', fontSize: '0.9rem' }}>✕ Complejo y técnico</div>
+                      <div style={{ color: '#00d084', fontWeight: 700, fontSize: '0.95rem' }}>✓ Intuitivo en 5 min</div>
                     </div>
                   </div>
                 </div>
