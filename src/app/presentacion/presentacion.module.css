@@ -314,3 +314,265 @@
   .priceCard { width: 100%; padding: 1.5rem 1.5rem; }
   .helpTip { display: none; }
 }
+
+/* Investment Comparison Slide & Animated Charts */
+@keyframes barGrow {
+  from { width: 0%; opacity: 0.3; }
+}
+
+@keyframes pulseGlow {
+  0%, 100% { box-shadow: 0 0 20px rgba(0, 208, 132, 0.15); }
+  50% { box-shadow: 0 0 35px rgba(0, 208, 132, 0.35); }
+}
+
+@keyframes drawLine {
+  from { stroke-dashoffset: 1000; }
+  to { stroke-dashoffset: 0; }
+}
+
+.investWrapper {
+  width: 100%;
+  max-width: 1120px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1.4rem;
+  padding-bottom: 2rem;
+}
+
+.tierSelector {
+  display: flex;
+  justify-content: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.tierBtn {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: rgba(255, 255, 255, 0.7);
+  padding: 0.55rem 1.2rem;
+  border-radius: 50px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.tierBtn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+}
+
+.tierBtnActive {
+  background: rgba(255, 71, 87, 0.15);
+  border-color: #ff4757;
+  color: #ff6b81;
+  box-shadow: 0 0 15px rgba(255, 71, 87, 0.25);
+}
+
+.savingsBanner {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  background: linear-gradient(135deg, rgba(0, 208, 132, 0.12) 0%, rgba(0, 208, 132, 0.02) 100%);
+  border: 1px solid rgba(0, 208, 132, 0.35);
+  border-radius: 18px;
+  padding: 1.2rem 1.5rem;
+  animation: pulseGlow 3s infinite ease-in-out;
+}
+
+.savingStat {
+  text-align: center;
+  border-right: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 0 0.5rem;
+}
+
+.savingStat:last-child {
+  border-right: none;
+}
+
+.savingValue {
+  font-size: clamp(1.4rem, 2.5vw, 2rem);
+  font-weight: 900;
+  color: #00d084;
+  line-height: 1.1;
+}
+
+.savingLabel {
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.7);
+  margin-top: 0.3rem;
+}
+
+.chartsRow {
+  display: grid;
+  grid-template-columns: 1.15fr 1fr;
+  gap: 1.4rem;
+  width: 100%;
+}
+
+.chartBox {
+  background: rgba(255, 255, 255, 0.025);
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  border-radius: 20px;
+  padding: 1.5rem;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.chartBoxTitle {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 0.25rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.chartBoxSub {
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.5);
+  margin-bottom: 1.1rem;
+}
+
+.barGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+}
+
+.barItem {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.barHeader {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.82rem;
+  font-weight: 600;
+}
+
+.barTrack {
+  width: 100%;
+  height: 14px;
+  background: rgba(255, 255, 255, 0.06);
+  border-radius: 50px;
+  overflow: hidden;
+  position: relative;
+}
+
+.barFillRed {
+  height: 100%;
+  background: linear-gradient(90deg, #ff4757 0%, #ff6b81 100%);
+  border-radius: 50px;
+  transition: width 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+  animation: barGrow 1.2s ease-out;
+}
+
+.barFillGreen {
+  height: 100%;
+  background: linear-gradient(90deg, #00d084 0%, #38ef7d 100%);
+  border-radius: 50px;
+  transition: width 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+  animation: barGrow 1.2s ease-out;
+  box-shadow: 0 0 12px rgba(0, 208, 132, 0.5);
+}
+
+.vsCardsRow {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.4rem;
+  width: 100%;
+}
+
+.vsCardBad {
+  background: rgba(255, 71, 87, 0.03);
+  border: 1px solid rgba(255, 71, 87, 0.25);
+  border-radius: 20px;
+  padding: 1.5rem 1.8rem;
+  text-align: left;
+}
+
+.vsCardGood {
+  background: rgba(0, 208, 132, 0.04);
+  border: 1.5px solid #00d084;
+  border-radius: 20px;
+  padding: 1.5rem 1.8rem;
+  text-align: left;
+  box-shadow: 0 0 28px rgba(0, 208, 132, 0.08);
+}
+
+.badList {
+  list-style: none;
+  padding: 0;
+  margin: 0.8rem 0 0 0;
+}
+
+.badList li {
+  position: relative;
+  padding: 0.45rem 0 0.45rem 1.8rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 0.92rem;
+  line-height: 1.45;
+}
+
+.badList li:last-child {
+  border-bottom: none;
+}
+
+.badList li::before {
+  content: "✕";
+  position: absolute;
+  left: 0;
+  top: 0.45rem;
+  color: #ff4757;
+  font-weight: bold;
+}
+
+.goodList {
+  list-style: none;
+  padding: 0;
+  margin: 0.8rem 0 0 0;
+}
+
+.goodList li {
+  position: relative;
+  padding: 0.45rem 0 0.45rem 1.8rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  color: rgba(255, 255, 255, 0.92);
+  font-size: 0.92rem;
+  line-height: 1.45;
+}
+
+.goodList li:last-child {
+  border-bottom: none;
+}
+
+.goodList li::before {
+  content: "✓";
+  position: absolute;
+  left: 0;
+  top: 0.45rem;
+  color: #00d084;
+  font-weight: bold;
+}
+
+.svgLineAnimated {
+  stroke-dasharray: 1000;
+  stroke-dashoffset: 0;
+  animation: drawLine 1.8s ease-out forwards;
+}
+
+@media (max-width: 900px) {
+  .savingsBanner { grid-template-columns: 1fr; }
+  .savingStat { border-right: none; border-bottom: 1px solid rgba(255, 255, 255, 0.08); padding-bottom: 0.6rem; }
+  .savingStat:last-child { border-bottom: none; padding-bottom: 0; }
+  .chartsRow, .vsCardsRow { grid-template-columns: 1fr; }
+}

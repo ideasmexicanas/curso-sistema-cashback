@@ -7,7 +7,7 @@ interface SlideData {
   tag?: string;
   title: string;
   subtitle?: string;
-  type: 'cover' | 'problem' | 'solution' | 'workflow' | 'tablet' | 'customer' | 'pro' | 'roi' | 'benefits' | 'pricing' | 'cta' | 'competitor';
+  type: 'cover' | 'problem' | 'solution' | 'workflow' | 'tablet' | 'customer' | 'pro' | 'roi' | 'benefits' | 'pricing' | 'cta' | 'competitor' | 'investment';
   competitorId?: 'natural' | 'starbucks' | 'cinepolis' | 'toks';
 }
 
@@ -99,6 +99,12 @@ const slides: SlideData[] = [
     title: 'Comienza a fidelizar hoy mismo',
     subtitle: 'Hagamos una demostración en vivo de 30 minutos directamente en tu sucursal.',
     type: 'cta'
+  },
+  {
+    tag: 'Comparativa de Inversión Real',
+    title: 'Sistema de Cadena Restaurantera vs. LoyaltyOS',
+    subtitle: 'Desarrollar y mantener una plataforma propia cuesta cientos de miles de pesos. Con LoyaltyOS obtienes tecnología superior por una fracción mínima del costo.',
+    type: 'investment'
   }
 ];
 
@@ -109,6 +115,9 @@ export default function PropuestaPage() {
   const [ticket, setTicket] = useState(250);
   const [dailyCustomers, setDailyCustomers] = useState(80);
   const [increaseRate, setIncreaseRate] = useState(10); // 10% extra retention rate
+
+  // State for the Chain Investment Comparison (Page 16)
+  const [chainLevel, setChainLevel] = useState<'basic' | 'mid' | 'enterprise'>('mid');
 
   const nextSlide = useCallback(() => {
     setCurrentSlide((prev) => Math.min(prev + 1, slides.length - 1));
@@ -139,6 +148,18 @@ export default function PropuestaPage() {
   const extraRevenue = extraVisits * ticket;
   const netReturnPro = extraRevenue - 8990;
 
+  // Chain Investment Comparison Calculations
+  const chainConfig = {
+    basic: { label: 'Plataforma Estándar ($150k)', initial: 150000, monthly: 30000, servers: 8000 },
+    mid: { label: 'Plataforma Intermedia ($200k)', initial: 200000, monthly: 38000, servers: 14000 },
+    enterprise: { label: 'Plataforma Robusta ($250k)', initial: 250000, monthly: 50000, servers: 22000 },
+  }[chainLevel];
+
+  const chainYear1 = chainConfig.initial + (chainConfig.monthly + chainConfig.servers) * 12;
+  const loyaltyYear1 = 8900 * 12;
+  const year1Savings = chainYear1 - loyaltyYear1;
+  const savingsPct = Math.round((year1Savings / chainYear1) * 100);
+
   return (
     <div className={styles.container}>
       {/* Dynamic Background Glow */}
@@ -154,16 +175,16 @@ export default function PropuestaPage() {
             className={`${styles.slide} ${isActive ? styles.active : ''}`}
             aria-hidden={!isActive}
           >
-            <div className={slide.type === 'cover' || slide.type === 'cta' || slide.type === 'solution' || slide.type === 'roi' || slide.type === 'competitor' ? styles.centerContent : styles.contentWrapper}>
+            <div className={slide.type === 'cover' || slide.type === 'cta' || slide.type === 'solution' || slide.type === 'roi' || slide.type === 'competitor' || slide.type === 'investment' ? styles.centerContent : styles.contentWrapper} style={slide.type === 'investment' ? { maxWidth: '1120px' } : undefined}>
               {slide.type === 'cover' && (
                 <img src="/logo.png" alt="LoyaltyOS Logo" style={{ height: '90px', width: 'auto', marginBottom: '2.5rem', display: 'block' }} />
               )}
               {slide.tag && <span className={styles.tag}>{slide.tag}</span>}
-              <h1 className={styles.title} style={{ textAlign: slide.type === 'cover' || slide.type === 'cta' || slide.type === 'solution' || slide.type === 'roi' || slide.type === 'competitor' ? 'center' : 'left' }}>
+              <h1 className={styles.title} style={{ textAlign: slide.type === 'cover' || slide.type === 'cta' || slide.type === 'solution' || slide.type === 'roi' || slide.type === 'competitor' || slide.type === 'investment' ? 'center' : 'left', fontSize: slide.type === 'investment' ? 'clamp(1.9rem, 3.6vw, 3rem)' : undefined, marginBottom: slide.type === 'investment' ? '0.6rem' : undefined }}>
                 {slide.title}
               </h1>
               {slide.subtitle && (
-                <p className={styles.subtitle} style={{ textAlign: slide.type === 'cover' || slide.type === 'cta' || slide.type === 'solution' || slide.type === 'roi' ? 'center' : 'left' }}>
+                <p className={styles.subtitle} style={{ textAlign: slide.type === 'cover' || slide.type === 'cta' || slide.type === 'solution' || slide.type === 'roi' || slide.type === 'investment' ? 'center' : 'left', fontSize: slide.type === 'investment' ? '1.05rem' : undefined, marginBottom: slide.type === 'investment' ? '1.2rem' : undefined }}>
                   {slide.subtitle}
                 </p>
               )}
@@ -485,6 +506,217 @@ export default function PropuestaPage() {
                       <li style={{ marginBottom: '1rem' }}><strong>Operación veloz en mostrador:</strong> El cajero envía el saldo al instante. Las filas avanzan rápido y la experiencia de pago es fluida.</li>
                       <li><strong>Comunicación inteligente:</strong> Envío de SMS y WhatsApp optimizados. Notificamos al cliente solo en su primer registro y a través de campañas automatizadas, evitando saturarlo de alertas de transacción y maximizando el impacto.</li>
                     </ul>
+                  </div>
+                </div>
+              )}
+
+              {slide.type === 'investment' && (
+                <div className={styles.investWrapper}>
+                  {/* Interactive Complexity Selector */}
+                  <div className={styles.tierSelector}>
+                    <button
+                      onClick={() => setChainLevel('basic')}
+                      className={`${styles.tierBtn} ${chainLevel === 'basic' ? styles.tierBtnActive : ''}`}
+                    >
+                      🏢 Plataforma Básica ($150,000 inicial)
+                    </button>
+                    <button
+                      onClick={() => setChainLevel('mid')}
+                      className={`${styles.tierBtn} ${chainLevel === 'mid' ? styles.tierBtnActive : ''}`}
+                    >
+                      🏬 Plataforma Intermedia ($200,000 inicial)
+                    </button>
+                    <button
+                      onClick={() => setChainLevel('enterprise')}
+                      className={`${styles.tierBtn} ${chainLevel === 'enterprise' ? styles.tierBtnActive : ''}`}
+                    >
+                      🌐 Plataforma Robusta ($250,000 inicial)
+                    </button>
+                  </div>
+
+                  {/* Top Animated Savings Banner */}
+                  <div className={styles.savingsBanner}>
+                    <div className={styles.savingStat}>
+                      <div className={styles.savingValue}>+${year1Savings.toLocaleString()} MXN</div>
+                      <div className={styles.savingLabel}>Ahorro Real el 1er Año ({savingsPct}% más económico)</div>
+                    </div>
+                    <div className={styles.savingStat}>
+                      <div className={styles.savingValue}>$0 MXN</div>
+                      <div className={styles.savingLabel}>Inversión Inicial en Desarrollo (vs. ${chainConfig.initial.toLocaleString()})</div>
+                    </div>
+                    <div className={styles.savingStat}>
+                      <div className={styles.savingValue}>100% Incluidos</div>
+                      <div className={styles.savingLabel}>Servidores Cloud de Alta Velocidad ($0 extra)</div>
+                    </div>
+                  </div>
+
+                  {/* Two Animated Charts Side by Side */}
+                  <div className={styles.chartsRow}>
+                    {/* Chart 1: Horizontal Animated Bar Breakdown */}
+                    <div className={styles.chartBox}>
+                      <div>
+                        <div className={styles.chartBoxTitle}>
+                          <span>📊 Comparativa de Costos (1er Año)</span>
+                          <span style={{ fontSize: '0.78rem', color: '#00d084', background: 'rgba(0,208,132,0.12)', padding: '0.25rem 0.65rem', borderRadius: '50px' }}>
+                            Ahorras {savingsPct}%
+                          </span>
+                        </div>
+                        <div className={styles.chartBoxSub}>Desembolso real entre construir un sistema propio vs. activar LoyaltyOS</div>
+                      </div>
+
+                      <div className={styles.barGroup} key={chainLevel}>
+                        <div className={styles.barItem}>
+                          <div className={styles.barHeader}>
+                            <span style={{ color: '#ff6b81' }}>🔴 Inversión Inicial (Desarrollo Propio)</span>
+                            <strong style={{ color: '#ff6b81' }}>${chainConfig.initial.toLocaleString()} MXN vs. $0 MXN</strong>
+                          </div>
+                          <div className={styles.barTrack}>
+                            <div className={styles.barFillRed} style={{ width: `${(chainConfig.initial / 250000) * 100}%` }} />
+                          </div>
+                        </div>
+
+                        <div className={styles.barItem}>
+                          <div className={styles.barHeader}>
+                            <span style={{ color: '#ff6b81' }}>🔴 Mantenimiento + Servidores / Mes</span>
+                            <strong style={{ color: '#ff6b81' }}>${(chainConfig.monthly + chainConfig.servers).toLocaleString()} MXN/mes</strong>
+                          </div>
+                          <div className={styles.barTrack}>
+                            <div className={styles.barFillRed} style={{ width: `${((chainConfig.monthly + chainConfig.servers) / 72000) * 100}%` }} />
+                          </div>
+                        </div>
+
+                        <div className={styles.barItem}>
+                          <div className={styles.barHeader}>
+                            <span style={{ color: '#ff6b81' }}>🔴 Costo Total Acumulado 1er Año (Cadena)</span>
+                            <strong style={{ color: '#ff6b81' }}>${chainYear1.toLocaleString()} MXN</strong>
+                          </div>
+                          <div className={styles.barTrack}>
+                            <div className={styles.barFillRed} style={{ width: '100%' }} />
+                          </div>
+                        </div>
+
+                        <div className={styles.barItem} style={{ marginTop: '0.3rem', paddingTop: '0.5rem', borderTop: '1px solid rgba(255,255,255,0.08)' }}>
+                          <div className={styles.barHeader}>
+                            <span style={{ color: '#00d084' }}>🟢 Costo Total Anual con LoyaltyOS (Servidores Incluidos)</span>
+                            <strong style={{ color: '#00d084', fontSize: '0.95rem' }}>${loyaltyYear1.toLocaleString()} MXN</strong>
+                          </div>
+                          <div className={styles.barTrack} style={{ height: '18px' }}>
+                            <div className={styles.barFillGreen} style={{ width: `${Math.max((loyaltyYear1 / chainYear1) * 100, 12)}%` }} />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Chart 2: Animated SVG Cumulative Cost Trajectory Curve */}
+                    <div className={styles.chartBox}>
+                      <div>
+                        <div className={styles.chartBoxTitle}>
+                          <span>📈 Curva de Desembolso en 12 Meses</span>
+                          <span style={{ fontSize: '0.75rem', color: 'rgba(255,255,255,0.5)' }}>Mes 1 → Mes 12</span>
+                        </div>
+                        <div className={styles.chartBoxSub}>Gasto acumulado en el tiempo: Sistema de Cadena (Rojo) vs. LoyaltyOS (Verde)</div>
+                      </div>
+
+                      <div style={{ position: 'relative', width: '100%', height: '165px', marginTop: '0.3rem' }} key={`svg-${chainLevel}-${isActive}`}>
+                        <svg viewBox="0 0 420 155" style={{ width: '100%', height: '100%', overflow: 'visible' }}>
+                          <defs>
+                            <linearGradient id="redGrad" x1="0" y1="0" x2="0" y2="1">
+                              <stop offset="0%" stopColor="#ff4757" stopOpacity="0.32" />
+                              <stop offset="100%" stopColor="#ff4757" stopOpacity="0.0" />
+                            </linearGradient>
+                            <linearGradient id="greenGrad" x1="0" y1="0" x2="0" y2="1">
+                              <stop offset="0%" stopColor="#00d084" stopOpacity="0.35" />
+                              <stop offset="100%" stopColor="#00d084" stopOpacity="0.0" />
+                            </linearGradient>
+                          </defs>
+
+                          {/* Grid Lines */}
+                          <line x1="30" y1="20" x2="405" y2="20" stroke="rgba(255,255,255,0.06)" strokeDasharray="4" />
+                          <line x1="30" y1="65" x2="405" y2="65" stroke="rgba(255,255,255,0.06)" strokeDasharray="4" />
+                          <line x1="30" y1="110" x2="405" y2="110" stroke="rgba(255,255,255,0.06)" strokeDasharray="4" />
+                          <line x1="30" y1="138" x2="405" y2="138" stroke="rgba(255,255,255,0.15)" />
+
+                          {/* Area & Animated Curve: Traditional Chain */}
+                          <path
+                            d="M 35 95 Q 160 65, 400 16 L 400 138 L 35 138 Z"
+                            fill="url(#redGrad)"
+                          />
+                          <path
+                            d="M 35 95 Q 160 65, 400 16"
+                            fill="none"
+                            stroke="#ff4757"
+                            strokeWidth="3.5"
+                            strokeLinecap="round"
+                            className={styles.svgLineAnimated}
+                          />
+                          <circle cx="35" cy="95" r="4.5" fill="#ff4757" />
+                          <circle cx="400" cy="16" r="5.5" fill="#ff4757" />
+                          <text x="42" y="87" fill="#ff6b81" fontSize="10" fontWeight="bold">
+                            Día 1: ${(chainConfig.initial / 1000).toFixed(0)}k
+                          </text>
+                          <text x="295" y="13" fill="#ff6b81" fontSize="11" fontWeight="bold">
+                            Mes 12: ${chainYear1.toLocaleString()}
+                          </text>
+
+                          {/* Area & Animated Curve: LoyaltyOS */}
+                          <path
+                            d="M 35 136 Q 200 128, 400 118 L 400 138 L 35 138 Z"
+                            fill="url(#greenGrad)"
+                          />
+                          <path
+                            d="M 35 136 Q 200 128, 400 118"
+                            fill="none"
+                            stroke="#00d084"
+                            strokeWidth="3.5"
+                            strokeLinecap="round"
+                            className={styles.svgLineAnimated}
+                          />
+                          <circle cx="35" cy="136" r="4.5" fill="#00d084" />
+                          <circle cx="400" cy="118" r="5.5" fill="#00d084" />
+                          <text x="42" y="131" fill="#00d084" fontSize="10" fontWeight="bold">
+                            Día 1: $0 Desarrollo
+                          </text>
+                          <text x="275" y="112" fill="#00d084" fontSize="11" fontWeight="bold">
+                            LoyaltyOS: ${loyaltyYear1.toLocaleString()}
+                          </text>
+                        </svg>
+                      </div>
+
+                      <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.78rem', color: 'rgba(255,255,255,0.65)', borderTop: '1px solid rgba(255,255,255,0.08)', paddingTop: '0.6rem', marginTop: '0.4rem' }}>
+                        <span>⚡ <strong>Salida:</strong> Hoy mismo vs. 6 meses</span>
+                        <span>🖥️ <strong>Panel:</strong> 5 min vs. Complejo</span>
+                        <span>☁️ <strong>Nube:</strong> $0 vs. Costo excesivo</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Side-by-Side Comparison Cards */}
+                  <div className={styles.vsCardsRow}>
+                    <div className={styles.vsCardBad}>
+                      <div style={{ color: '#ff6b81', fontSize: '1.15rem', fontWeight: 800, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                        <span>🏢 Sistema Propio de Cadena Restaurantera</span>
+                        <span style={{ fontSize: '0.72rem', background: 'rgba(255,71,87,0.18)', padding: '0.2rem 0.6rem', borderRadius: '50px' }}>Alto Riesgo</span>
+                      </div>
+                      <ul className={styles.badList}>
+                        <li><strong>Inversión inicial de $150,000 a $250,000 MXN:</strong> Desembolso pesado antes de atender al primer cliente, dependiendo de lo robusto de la plataforma.</li>
+                        <li><strong>Pago mensual de $30,000 MXN hacia arriba:</strong> Igualas forzosas de programadores, soporte técnico, mantenimiento y parches de seguridad.</li>
+                        <li><strong>Servidores excesivamente caros:</strong> Facturas impredecibles de nube, bases de datos y tráfico que escalan cada mes.</li>
+                        <li><strong>Panel de control complejo:</strong> Interfaces saturadas y difíciles de entender que exigen semanas de capacitación técnica.</li>
+                      </ul>
+                    </div>
+
+                    <div className={styles.vsCardGood}>
+                      <div style={{ color: '#00d084', fontSize: '1.15rem', fontWeight: 800, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                        <span>🚀 La Ventaja Económica LoyaltyOS</span>
+                        <span style={{ fontSize: '0.72rem', background: '#00d084', color: '#000', padding: '0.2rem 0.65rem', borderRadius: '50px', fontWeight: 800 }}>Inteligente y Rentable</span>
+                      </div>
+                      <ul className={styles.goodList}>
+                        <li><strong>$0 MXN de Inversión Inicial en Desarrollo:</strong> Tecnología probada de nivel corporativo lista para usarse hoy mismo sin riesgos.</li>
+                        <li><strong>Inversión mensual ultra accesible:</strong> Una fracción mínima de lo que gasta una cadena, pagándose sola con el retorno de tus clientes.</li>
+                        <li><strong>Servidores de alta velocidad 100% incluidos:</strong> Nos encargamos de toda la nube, encriptación y respaldos sin cobros sorpresa.</li>
+                        <li><strong>Panel de control amigable y poderoso:</strong> Diseñado para restauranteros; en 5 minutos dominas métricas animadas, cajeros y campañas de WhatsApp.</li>
+                      </ul>
+                    </div>
                   </div>
                 </div>
               )}
